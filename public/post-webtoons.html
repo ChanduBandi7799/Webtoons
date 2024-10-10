@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Post Webtoons</title>
+</head>
+<body>
+    <h1>Post a Webtoon</h1>
+    <form id="post-form">
+        <input type="text" placeholder="Webtoon ID" required name="id">
+        <input type="text" placeholder="Title" required name="title">
+        <textarea placeholder="Description" required name="description"></textarea>
+        <input type="text" placeholder="Characters (comma separated)" required name="characters">
+        <button type="submit">Post Webtoon</button>
+    </form>
+
+    <script>
+        document.getElementById('post-form').onsubmit = async function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const response = await fetch('/api/webtoons', {
+                method: 'POST',
+                body: new URLSearchParams(formData),
+            });
+            const result = await response.json();
+            alert(result.message);
+        };
+    </script>
+</body>
+</html>

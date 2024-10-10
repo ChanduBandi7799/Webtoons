@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Delete Webtoon</title>
+</head>
+<body>
+    <h1>Delete Webtoon</h1>
+    <input type="text" placeholder="Enter Webtoon ID" id="delete-input">
+    <button onclick="deleteWebtoon()">Delete Webtoon</button>
+    <div id="delete-message"></div>
+
+    <script>
+        async function deleteWebtoon() {
+            const webtoonId = document.getElementById('delete-input').value;
+            const response = await fetch(`/api/webtoons/${webtoonId}`, {
+                method: 'DELETE'
+            });
+            const result = await response.json();
+            document.getElementById('delete-message').innerHTML = `<p>${result.message}</p>`;
+        }
+    </script>
+</body>
+</html>

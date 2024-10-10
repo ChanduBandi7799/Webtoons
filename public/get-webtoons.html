@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Get Webtoons</title>
+</head>
+<body>
+    <h1>Get Webtoons</h1>
+    <button onclick="fetchWebtoons()">Fetch Webtoons</button>
+    <div id="webtoon-list"></div>
+
+    <script>
+        async function fetchWebtoons() {
+            const response = await fetch('/api/webtoons');
+            const webtoons = await response.json();
+            const webtoonList = document.getElementById('webtoon-list');
+            webtoonList.innerHTML = '';
+            webtoons.forEach(webtoon => {
+                webtoonList.innerHTML += `<p>${webtoon.title} (ID: ${webtoon.id})</p>`;
+            });
+        }
+    </script>
+</body>
+</html>

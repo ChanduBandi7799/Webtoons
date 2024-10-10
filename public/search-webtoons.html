@@ -1,0 +1,47 @@
+<!-- public/search-webtoons.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Webtoons</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Search Webtoons</h1>
+    <form id="searchForm">
+        <input type="text" id="searchTerm" placeholder="Enter title to search" required>
+        <button type="submit">Search</button>
+    </form>
+    <div id="results"></div>
+
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const searchTerm = document.getElementById('searchTerm').value;
+
+            // Fetching webtoons based on the title
+            const response = await fetch(`/api/webtoons?title=${encodeURIComponent(searchTerm)}`);
+            const results = await response.json();
+
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+
+            if (results.length === 0) {
+                resultsDiv.innerHTML = '<p>No webtoons found.</p>';
+                return;
+            }
+
+            results.forEach(webtoon => {
+                resultsDiv.innerHTML += `
+                    <div>
+                        <h3>${webtoon.title}</h3>
+                        <p>Description: ${webtoon.description}</p>
+                        <p>Characters: ${webtoon.characters}</p>
+                    </div>
+                `;
+            });
+        });
+    </script>
+</body>
+</html>
